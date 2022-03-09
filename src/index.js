@@ -1,17 +1,51 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// people dropping off a form
+const createPolicy = (name, cash) => {
+  return {
+    type: 'CREATE_POLICY',
+    payload: {
+      name,
+      cash
+    }
+  }
+};
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+const deletePolicy = (name) => {
+  return {
+    type: 'DELETE_POLICY',
+    payload: {
+      name
+    }
+  }
+};
+
+const createClaim = (name, amountOfClaim) => {
+
+  return {
+    type: 'CREATE-CLAIM',
+    payload: {
+      name,
+      amountOfClaim
+    }
+  }
+};
+
+
+// Departments -Reducers
+
+
+const claimHistory = (oldListOfClaims, action) => {
+  if (action.type === 'CREATE-CLAIM') {
+    return [...oldListOfClaims, action.payload]
+  }
+
+  return oldListOfClaims
+};
+
+const accounting = (money, action) => {
+  if (action.type === 'CREATE_POLICY') {
+    return money + action.payload.amountOfClaim
+  }
+}
